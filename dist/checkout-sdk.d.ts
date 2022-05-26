@@ -1039,7 +1039,7 @@ declare interface BoltPaymentInitializeOptions {
 declare interface BraintreeError extends Error {
     type: 'CUSTOMER' | 'MERCHANT' | 'NETWORK' | 'INTERNAL' | 'UNKNOWN';
     code: string;
-    message: string;
+    details?: unknown;
 }
 
 declare type BraintreeFormFieldBlurEventData = BraintreeFormFieldKeyboardEventData;
@@ -1267,6 +1267,15 @@ declare interface BraintreeThreeDSecureOptions {
      * the current page.
      */
     removeFrame(): void;
+}
+
+declare interface BraintreeVenmoButtonInitializeOptions {
+    /**
+     * A callback that gets called on any error.
+     *
+     * @param error - The error object describing the failure.
+     */
+    onError?(error: BraintreeError | StandardError): void;
 }
 
 declare interface BraintreeVerifyPayload {
@@ -1630,6 +1639,11 @@ declare interface CheckoutButtonInitializeOptions extends CheckoutButtonOptions 
      * omitted unless you need to support Braintree Credit.
      */
     braintreepaypalcredit?: BraintreePaypalButtonInitializeOptions;
+    /**
+     * The options that are required to facilitate Braintree Venmo. They can be
+     * omitted unless you need to support Braintree Venmo.
+     */
+    braintreevenmo?: BraintreeVenmoButtonInitializeOptions;
     /**
      * The options that are required to facilitate PayPal. They can be omitted
      * unless you need to support Paypal.
