@@ -5,6 +5,7 @@ import {
     BraintreeHostWindow,
     BraintreeInitializationData,
     BraintreeIntegrationService,
+    BraintreeMessages,
     BraintreePaypalCheckout,
     BraintreePaypalSdkCreatorConfig,
     BraintreeTokenizePayload,
@@ -39,6 +40,7 @@ export default class BraintreePaypalCreditButtonStrategy implements CheckoutButt
         private paymentIntegrationService: PaymentIntegrationService,
         private formPoster: FormPoster,
         private braintreeIntegrationService: BraintreeIntegrationService,
+        private braintreeMessages: BraintreeMessages,
         private braintreeHostWindow: BraintreeHostWindow,
     ) {}
 
@@ -99,6 +101,14 @@ export default class BraintreePaypalCreditButtonStrategy implements CheckoutButt
         const paypalCheckoutSuccessCallback = (
             braintreePaypalCheckout: BraintreePaypalCheckout,
         ) => {
+            if (braintreepaypalcredit.messagingContainerId) {
+                this.braintreeMessages.render(
+                    methodId,
+                    braintreepaypalcredit.messagingContainerId,
+                    'cart',
+                );
+            }
+
             this.renderPayPalButton(
                 braintreePaypalCheckout,
                 braintreepaypalcredit,
