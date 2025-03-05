@@ -296,6 +296,7 @@ export default class PaypalCommerceFastlanePaymentStrategy implements PaymentStr
 
         const { orderId } = await this.paypalCommerceRequestSender.createOrder(methodId, {
             cartId,
+            fastlaneToken: instrumentId,
         });
 
         return {
